@@ -14,7 +14,7 @@ loop do
   when '2'
     app.list_people
   when '3'
-    app.create_person
+    app.input_person_info
   when '4'
     app.create_book
   when '5'

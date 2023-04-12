@@ -48,7 +48,7 @@ class App
     end
   end
 
-  def create_person
+  def input_person_info
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     person_type = gets.chomp
 
@@ -58,6 +58,10 @@ class App
     print 'Name: '
     name = gets.chomp
 
+    create_person(person_type, age, name)
+  end
+
+  def create_person(person_type, age, name)
     case person_type
     when '1'
       print 'Has parent permission? [Y/N]: '
@@ -71,7 +75,7 @@ class App
       @people.push(Teacher.new(age, name, specialization))
     else
       puts 'Invalid option'
-      create_person
+      input_person_info
     end
 
     puts 'Person created successfully'

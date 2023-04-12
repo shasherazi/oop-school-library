@@ -123,6 +123,8 @@ class App
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   def run
     welcome
 
@@ -149,4 +151,6 @@ class App
     end
     puts 'Thank you for using this app!'
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
 end

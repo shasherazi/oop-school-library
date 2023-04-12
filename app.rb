@@ -122,4 +122,31 @@ class App
       puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == id
     end
   end
+
+  def run
+    welcome
+
+    loop do
+      menu
+      option = gets.chomp
+
+      case option
+      when '1'
+        list_books
+      when '2'
+        list_people
+      when '3'
+        input_person_info
+      when '4'
+        create_book
+      when '5'
+        create_rental
+      when '6'
+        list_rentals_for_person_id
+      when '7', 'q', 'quit'
+        break
+      end
+    end
+    puts 'Thank you for using this app!'
+  end
 end

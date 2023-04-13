@@ -5,12 +5,6 @@ require './teacher'
 require './rental'
 
 class App
-  def initialize
-    @books = []
-    @people = []
-    @rentals = []
-  end
-
   def welcome
     puts 'Welcome to School Library App!\n'
   end

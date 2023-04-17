@@ -27,9 +27,7 @@ class App
   end
 
   # rubocop:disable Metrics/MethodLength
-
   # rubocop:disable Metrics/CyclomaticComplexity
-
   def run
     @welcome.welcome
     loop do
@@ -52,10 +50,9 @@ class App
         break
       end
     end
+
     puts 'Thank you for using this app!'
   end
-
   # rubocop:enable Metrics/MethodLength
-
   # rubocop:enable Metrics/CyclomaticComplexity
 end

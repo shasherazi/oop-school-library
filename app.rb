@@ -1,67 +1,73 @@
 require './book'
+
 require './person'
+
 require './student'
+
 require './teacher'
+
 require './rental'
+
 require './welcome'
 
+require './list_books'
+
+require './list_people'
+
+require './list_rentals'
+
+
+
 class App
+
   def initialize()
+
     @books = []
+
     @people = []
+
     @rentals = []
+
     @welcome = Welcome.new
+
+    @list_books = ListBooks.new
+
+    @list_people = ListPeople.new
+
+    @list_rentals = ListRentals.new
+
   end
 
-  def list_books
-    if @books.empty?
 
-      puts 'No books found'
-
-    else
-
-      @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
-
-    end
-  end
-
-  def show_person(person)
-    print "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
-
-    puts ", Specialization: #{person.specialization}" if person.instance_of?(Teacher)
-
-    puts ", Classroom: #{person.classroom}" if person.instance_of?(Student)
-  end
-
-  def list_people
-    if @people.empty?
-
-      puts 'No people found'
-
-    else
-
-      @people.each { |person| show_person(person) }
-
-    end
-  end
 
   def input_person_info
+
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
 
     person_type = gets.chomp
+
+
 
     print 'Age: '
 
     age = gets.chomp
 
+
+
     print 'Name: '
 
     name = gets.chomp
 
+
+
     create_person(person_type, age, name)
+
   end
 
+
+
   def create_person(person_type, age, name)
+
     case person_type
 
     when '1'
@@ -92,82 +98,105 @@ class App
 
     end
 
+
+
     puts 'Person created successfully'
+
   end
 
+
+
   def create_book
+
     print 'Title: '
 
     title = gets.chomp
+
+
 
     print 'Author: '
 
     author = gets.chomp
 
+
+
     @books.push(Book.new(title, author))
 
     puts 'Book created successfully'
+
   end
 
+
+
   def create_rental
+
     puts 'Select a book from the following list by number'
 
     @books.each_with_index { |book, index| puts "#{index}) #{book.title}, #{book.author}" }
 
+
+
     book_index = gets.chomp.to_i
+
+
 
     puts 'Select a person from the following list by number (not id)'
 
     @people.each_with_index do |person, index|
+
       print "#{index}) "
 
-      show_person(person)
+      @list_people.show_person(person)
+
     end
 
+
+
     person_index = gets.chomp.to_i
+
+
 
     print 'Date: '
 
     date = gets.chomp
 
+
+
     @rentals.push(Rental.new(date, @books[book_index], @people[person_index]))
 
     puts 'Rental created successfully'
+
   end
 
-  def list_rentals_for_person_id
-    print 'ID of person: '
 
-    id = gets.chomp.to_i
-
-    puts 'Rentals:'
-
-    @rentals.each do |rental|
-      puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == id
-    end
-  end
 
   # rubocop:disable Metrics/MethodLength
 
   # rubocop:disable Metrics/CyclomaticComplexity
 
   def run
+
     @welcome.welcome
 
+
+
     loop do
+
       @welcome.menu
 
       option = gets.chomp
+
+
 
       case option
 
       when '1'
 
-        list_books
+        @list_books.list(@books)
 
       when '2'
 
-        list_people
+        @list_people.list(@people)
 
       when '3'
 
@@ -183,19 +212,23 @@ class App
 
       when '6'
 
-        list_rentals_for_person_id
+        @list_rentals.list(@rentals)
 
       when '7', 'q', 'quit'
 
         break
 
       end
+
     end
 
     puts 'Thank you for using this app!'
+
   end
 
   # rubocop:enable Metrics/MethodLength
 
   # rubocop:enable Metrics/CyclomaticComplexity
+
 end
+

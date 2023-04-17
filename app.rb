@@ -6,6 +6,7 @@ require './rental'
 require './welcome'
 require './list_books'
 require './list_people'
+require './list_rentals'
 
 class App
   def initialize()
@@ -15,6 +16,7 @@ class App
     @welcome = Welcome.new
     @list_books = ListBooks.new
     @list_people = ListPeople.new
+    @list_rentals = ListRentals.new
   end
 
   def input_person_info
@@ -82,18 +84,8 @@ class App
     puts 'Rental created successfully'
   end
 
-  def list_rentals_for_person_id
-    print 'ID of person: '
-    id = gets.chomp.to_i
-
-    puts 'Rentals:'
-    @rentals.each do |rental|
-      puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == id
-    end
-  end
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity
-
   def run
     @welcome.welcome
 
@@ -113,7 +105,7 @@ class App
       when '5'
         create_rental
       when '6'
-        list_rentals_for_person_id
+        @list_rentals.list(@rentals)
       when '7', 'q', 'quit'
         break
       end

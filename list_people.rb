@@ -1,7 +1,6 @@
 require './list_items'
 require './student'
 require './teacher'
-
 class ListPeople < List
   def show_person(person)
     print "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"

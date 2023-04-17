@@ -2,7 +2,7 @@ require_relative 'create'
 require './book'
 
 class CreateBook < Create
-  def create_book(books)
+  def create(books)
     print 'Title: '
     title = gets.chomp
     print 'Author: '

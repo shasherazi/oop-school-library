@@ -8,10 +8,10 @@ class CreatePerson < Create
     age = gets.chomp
     print 'Name: '
     name = gets.chomp
-    create_person(person_type, age, name, people)
+    create(person_type, age, name, people)
   end
 
-  def create_person(person_type, age, name, people)
+  def create(person_type, age, name, people)
     case person_type
     when '1'
       print 'Has parent permission? [Y/N]: '

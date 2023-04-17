@@ -4,6 +4,8 @@ require './student'
 require './teacher'
 require './rental'
 require './welcome'
+require './list_books'
+require './list_people'
 
 class App
   def initialize()
@@ -11,28 +13,8 @@ class App
     @people = []
     @rentals = []
     @welcome = Welcome.new
-  end
-
-  def list_books
-    if @books.empty?
-      puts 'No books found'
-    else
-      @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
-    end
-  end
-
-  def show_person(person)
-    print "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
-    puts ", Specialization: #{person.specialization}" if person.instance_of?(Teacher)
-    puts ", Classroom: #{person.classroom}" if person.instance_of?(Student)
-  end
-
-  def list_people
-    if @people.empty?
-      puts 'No people found'
-    else
-      @people.each { |person| show_person(person) }
-    end
+    @list_books = ListBooks.new
+    @list_people = ListPeople.new
   end
 
   def input_person_info
@@ -88,7 +70,7 @@ class App
     puts 'Select a person from the following list by number (not id)'
     @people.each_with_index do |person, index|
       print "#{index}) "
-      show_person(person)
+      @list_people.show_person(person)
     end
 
     person_index = gets.chomp.to_i
@@ -121,9 +103,9 @@ class App
 
       case option
       when '1'
-        list_books
+        @list_books.list(@books)
       when '2'
-        list_people
+        @list_people.list(@people)
       when '3'
         input_person_info
       when '4'

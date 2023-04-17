@@ -6,6 +6,10 @@ require './student'
 
 require './teacher'
 
+require './Create/create'
+
+require './Create/create_book'
+
 require './rental'
 
 require './welcome'
@@ -16,12 +20,12 @@ require './list_people'
 
 require './list_rentals'
 
+require './Create/create_person'
 
+require './Create/create_rental'
 
 class App
-
   def initialize()
-
     @books = []
 
     @people = []
@@ -36,157 +40,24 @@ class App
 
     @list_rentals = ListRentals.new
 
+    @create_books = CreateBook.new
+
+    @create_person = CreatePerson.new
+
+    @create_rental = CreateRental.new
   end
-
-
-
-  def input_person_info
-
-    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
-
-    person_type = gets.chomp
-
-
-
-    print 'Age: '
-
-    age = gets.chomp
-
-
-
-    print 'Name: '
-
-    name = gets.chomp
-
-
-
-    create_person(person_type, age, name)
-
-  end
-
-
-
-  def create_person(person_type, age, name)
-
-    case person_type
-
-    when '1'
-
-      print 'Has parent permission? [Y/N]: '
-
-      parent_permission = gets.chomp.downcase == 'y'
-
-      print 'What is the student\'s classroom? '
-
-      classroom = gets.chomp
-
-      @people.push(Student.new(age, name, classroom, parent_permission: parent_permission))
-
-    when '2'
-
-      print 'Specialization: '
-
-      specialization = gets.chomp
-
-      @people.push(Teacher.new(age, name, specialization))
-
-    else
-
-      puts 'Invalid option'
-
-      input_person_info
-
-    end
-
-
-
-    puts 'Person created successfully'
-
-  end
-
-
-
-  def create_book
-
-    print 'Title: '
-
-    title = gets.chomp
-
-
-
-    print 'Author: '
-
-    author = gets.chomp
-
-
-
-    @books.push(Book.new(title, author))
-
-    puts 'Book created successfully'
-
-  end
-
-
-
-  def create_rental
-
-    puts 'Select a book from the following list by number'
-
-    @books.each_with_index { |book, index| puts "#{index}) #{book.title}, #{book.author}" }
-
-
-
-    book_index = gets.chomp.to_i
-
-
-
-    puts 'Select a person from the following list by number (not id)'
-
-    @people.each_with_index do |person, index|
-
-      print "#{index}) "
-
-      @list_people.show_person(person)
-
-    end
-
-
-
-    person_index = gets.chomp.to_i
-
-
-
-    print 'Date: '
-
-    date = gets.chomp
-
-
-
-    @rentals.push(Rental.new(date, @books[book_index], @people[person_index]))
-
-    puts 'Rental created successfully'
-
-  end
-
-
 
   # rubocop:disable Metrics/MethodLength
 
   # rubocop:disable Metrics/CyclomaticComplexity
 
   def run
-
     @welcome.welcome
 
-
-
     loop do
-
       @welcome.menu
 
       option = gets.chomp
-
-
 
       case option
 
@@ -200,15 +71,15 @@ class App
 
       when '3'
 
-        input_person_info
+        @create_person.input_person_info(@people)
 
       when '4'
 
-        create_book
+        @create_books.create_book(@books)
 
       when '5'
 
-        create_rental
+        @create_rental.create_rental(@rentals, @books, @people, @list_people)
 
       when '6'
 
@@ -219,16 +90,12 @@ class App
         break
 
       end
-
     end
 
     puts 'Thank you for using this app!'
-
   end
 
   # rubocop:enable Metrics/MethodLength
 
   # rubocop:enable Metrics/CyclomaticComplexity
-
 end
-

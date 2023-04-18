@@ -5,7 +5,9 @@ class BookStorage < Storage
   def fetch; end
 
   def self.save(books)
-    serialize(books)
+    File.open('./data/books.json', 'w') do |file|
+      file.write(serialize(books).to_json)
+    end
   end
 
   def self.serialize(books)

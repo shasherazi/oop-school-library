@@ -12,11 +12,12 @@ require './list_rentals'
 require './Create/create_person'
 require './Create/create_rental'
 require './Save/book_storage'
+require './Save/people_storage'
 
 class App
   def initialize()
     @books = BookStorage.fetch || []
-    @people = []
+    @people = PeopleStorage.fetch || []
     @rentals = []
     @welcome = Welcome.new
     @list_books = ListBooks.new
@@ -31,6 +32,7 @@ class App
     return if @books.empty?
 
     BookStorage.save(@books)
+    PeopleStorage.save(@people)
   end
 
   # rubocop:disable Metrics/MethodLength

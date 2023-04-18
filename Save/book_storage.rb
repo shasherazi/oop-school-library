@@ -3,7 +3,11 @@ require_relative './storage'
 require './book'
 
 class BookStorage < Storage
-  @@books = []
+  @books = []
+
+  class << self
+    attr_accessor :books
+  end
 
   def self.fetch
     books = if File.exist?('./data/books.json')
@@ -16,10 +20,10 @@ class BookStorage < Storage
 
   def self.save(books)
     books.each do |book|
-      @@books.push(serialize(book))
+      BookStorage.books.push(serialize(book))
     end
 
-    File.write('./data/books.json', JSON.pretty_generate(@@books))
+    File.write('./data/books.json', JSON.pretty_generate(BookStorage.books))
   end
 
   def self.serialize(book)

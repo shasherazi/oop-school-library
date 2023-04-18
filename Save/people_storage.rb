@@ -3,7 +3,11 @@ require './student'
 require './teacher'
 
 class PeopleStorage < Storage
-  @@people = []
+  @people = []
+
+  class << self
+    attr_accessor :people
+  end
 
   def self.fetch
     people = if File.exist?('./data/people.json')
@@ -16,10 +20,10 @@ class PeopleStorage < Storage
 
   def self.save(people)
     people.each do |person|
-      @@people.push(serialize(person))
+      PeopleStorage.people.push(serialize(person))
     end
 
-    File.write('./data/people.json', JSON.pretty_generate(@@people))
+    File.write('./data/people.json', JSON.pretty_generate(PeopleStorage.people))
   end
 
   def self.serialize(person)

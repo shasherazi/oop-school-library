@@ -5,7 +5,11 @@ require './Save/book_storage'
 require './Save/people_storage'
 
 class RentalStorage < Storage
-  @@rentals = []
+  @rentals = []
+
+  class << self
+    attr_accessor :rentals
+  end
 
   def self.fetch
     rentals = if File.exist?('./data/rentals.json')
@@ -18,10 +22,10 @@ class RentalStorage < Storage
 
   def self.save(rentals)
     rentals.each do |rental|
-      @@rentals.push(serialize(rental))
+      RentalStorage.rentals.push(serialize(rental))
     end
 
-    File.write('./data/rentals.json', JSON.pretty_generate(@@rentals))
+    File.write('./data/rentals.json', JSON.pretty_generate(RentalStorage.rentals))
   end
 
   def self.serialize(rental)

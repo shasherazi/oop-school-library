@@ -2,6 +2,7 @@ require 'json'
 require_relative './storage'
 require './rental'
 require './Save/book_storage'
+require './Save/people_storage'
 
 class RentalStorage < Storage
   @@rentals = []
@@ -16,7 +17,7 @@ class RentalStorage < Storage
   end
 
   def self.save(rentals)
-    for rental in rentals
+    rentals.each do |rental|
       @@rentals.push(serialize(rental))
     end
 
@@ -27,7 +28,7 @@ class RentalStorage < Storage
     {
       date: rental.date,
       book: BookStorage.serialize(rental.book),
-      person: rental.person
+      person: PeopleStorage.serialize(rental.person)
     }
   end
 

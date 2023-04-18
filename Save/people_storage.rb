@@ -3,31 +3,34 @@ require './student'
 require './teacher'
 
 class PeopleStorage < Storage
-  def self.fetch
-    return [] if File.read('./data/people.json').empty?
+  @@people = []
 
-    people = JSON.parse(File.read('./data/people.json'))
+  def self.fetch
+    people = if File.exist?('./data/people.json')
+               JSON.parse(File.read('./data/people.json'))
+             else
+               []
+             end
     deserialize(people)
   end
 
   def self.save(people)
-    File.write('./data/people.json', serialize(people).to_json)
+    people.each do |person|
+      @@people.push(serialize(person))
+    end
+
+    File.write('./data/people.json', JSON.pretty_generate(@@people))
   end
 
-  def self.serialize(people)
-    people_array = []
-    people.each do |person|
-      temp_hash = {
-        name: person.name,
-        age: person.age,
-        id: person.id,
-        description: person.class,
-        classroom: person.instance_of?(::Student) ? person.classroom : nil,
-        specialization: person.instance_of?(::Teacher) ? person.specialization : nil
-      }
-      people_array.push(temp_hash)
-    end
-    people_array
+  def self.serialize(person)
+    {
+      name: person.name,
+      age: person.age,
+      id: person.id,
+      description: person.class,
+      classroom: person.instance_of?(::Student) ? person.classroom : nil,
+      specialization: person.instance_of?(::Teacher) ? person.specialization : nil
+    }
   end
 
   def self.deserialize(item)

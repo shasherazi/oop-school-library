@@ -18,7 +18,7 @@ require './Save/people_storage'
 class App
   def initialize()
     @books = BookStorage.fetch
-    @people = PeopleStorage.fetch || []
+    @people = PeopleStorage.fetch
     @rentals = RentalStorage.fetch
     @welcome = Welcome.new
     @list_books = ListBooks.new

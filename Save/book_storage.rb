@@ -15,7 +15,7 @@ class BookStorage < Storage
   end
 
   def self.save(books)
-    for book in books
+    books.each do |book|
       @@books.push(serialize(book))
     end
 

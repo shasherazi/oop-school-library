@@ -11,10 +11,11 @@ require './list_people'
 require './list_rentals'
 require './Create/create_person'
 require './Create/create_rental'
+require './Save/book_storage'
 
 class App
   def initialize()
-    @books = []
+    @books = BookStorage.fetch || []
     @people = []
     @rentals = []
     @welcome = Welcome.new
@@ -24,6 +25,12 @@ class App
     @create_books = CreateBook.new
     @create_person = CreatePerson.new
     @create_rental = CreateRental.new
+  end
+
+  def quit
+    return if @books.empty?
+
+    BookStorage.save(@books)
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -47,6 +54,7 @@ class App
       when '6'
         @list_rentals.list(@rentals)
       when '7', 'q', 'quit'
+        quit
         break
       end
     end

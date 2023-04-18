@@ -6,8 +6,6 @@ class ListBooks < List
       puts 'No books found'
     else
       books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
-      books.each
-      puts JSON.generate(books)
     end
   end
 end

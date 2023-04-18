@@ -22,7 +22,7 @@ class CreatePerson < Create
     when '2'
       print 'Specialization: '
       specialization = gets.chomp
-      people.push(Teacher.new(age, name,  nil, specialization))
+      people.push(Teacher.new(age, name, nil, specialization))
     else
       puts 'Invalid option'
       input_person_info

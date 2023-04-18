@@ -1,11 +1,13 @@
 require './list_items'
-
+require 'json'
 class ListBooks < List
   def list(books)
     if books.empty?
       puts 'No books found'
     else
       books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+      books.each
+      puts JSON.generate(books)
     end
   end
 end

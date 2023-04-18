@@ -7,5 +7,7 @@ class RentalStorage < Storage
 
   def serialize(item); end
 
-  def deserialize(item); end
+  def deserialize(item)
+
+end
 end

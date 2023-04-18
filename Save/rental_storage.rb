@@ -39,8 +39,10 @@ class RentalStorage < Storage
   def self.deserialize(item)
     temp = []
     item.each do |rental|
-      new_rental = Rental.new(rental['date'], rental['book'], rental['person'])
-      temp.push(new_rental)
+      person = PeopleStorage.deserialize([rental['person']])
+      book = BookStorage.deserialize([rental['book']])
+      rental = Rental.new(rental['date'], book, person)
+      temp.push(rental)
     end
     temp
   end

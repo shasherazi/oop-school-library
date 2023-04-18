@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "date": "sms",
+    "book": {
+      "title": "me",
+      "author": "you"
+    },
+    "person": "#<Student:0x000055981b34ab80>"
+  }
+]

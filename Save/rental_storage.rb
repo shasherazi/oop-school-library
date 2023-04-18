@@ -4,26 +4,31 @@ require './rental'
 require './Save/book_storage'
 
 class RentalStorage < Storage
+  @@rentals = []
+
   def self.fetch
-    rentals = JSON.parse(File.read('./data/rentals.json'))
+    rentals = if File.exist?('./data/rentals.json')
+                JSON.parse(File.read('./data/rentals.json'))
+              else
+                []
+              end
     deserialize(rentals)
   end
 
   def self.save(rentals)
-    File.write('./data/rentals.json', serialize(rentals).to_json)
+    for rental in rentals
+      @@rentals.push(serialize(rental))
+    end
+
+    File.write('./data/rentals.json', JSON.pretty_generate(@@rentals))
   end
 
-  def self.serialize(rentals)
-    rentals_array = []
-    rentals.each do |rental|
-      temp_hash = {
-        date: rental.date,
-        book: BookStorage.serialize(rental.book),
-        person: rental.person
-      }
-      rentals_array.push(temp_hash)
-    end
-    rentals_array
+  def self.serialize(rental)
+    {
+      date: rental.date,
+      book: BookStorage.serialize(rental.book),
+      person: rental.person
+    }
   end
 
   def self.deserialize(item)

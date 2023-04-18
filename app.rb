@@ -12,6 +12,7 @@ require './list_rentals'
 require './Create/create_person'
 require './Create/create_rental'
 require './Save/book_storage'
+require './Save/rental_storage'
 
 class App
   def initialize()
@@ -28,9 +29,8 @@ class App
   end
 
   def quit
-    return if @books.empty?
-
     BookStorage.save(@books)
+    RentalStorage.save(@rentals)
   end
 
   # rubocop:disable Metrics/MethodLength

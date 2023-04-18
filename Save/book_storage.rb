@@ -3,25 +3,30 @@ require_relative './storage'
 require './book'
 
 class BookStorage < Storage
+  @@books = []
+
   def self.fetch
-    books = JSON.parse(File.read('./data/books.json'))
+    books = if File.exist?('./data/books.json')
+              JSON.parse(File.read('./data/books.json'))
+            else
+              []
+            end
     deserialize(books)
   end
 
   def self.save(books)
-    File.write('./data/books.json', serialize(books).to_json)
+    for book in books
+      @@books.push(serialize(book))
+    end
+
+    File.write('./data/books.json', JSON.pretty_generate(@@books))
   end
 
-  def self.serialize(books)
-    books_array = []
-    books.each do |book|
-      temp_hash = {
-        title: book.title,
-        author: book.author
-      }
-      books_array.push(temp_hash)
-    end
-    books_array
+  def self.serialize(book)
+    {
+      title: book.title,
+      author: book.author
+    }
   end
 
   def self.deserialize(books)

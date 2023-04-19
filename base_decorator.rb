@@ -4,7 +4,7 @@ class BaseDecorator < Nameable
   attr_accessor :nameable
 
   def initialize(nameable)
-    super(nameable.name)
+    super()
     @nameable = nameable
   end
 

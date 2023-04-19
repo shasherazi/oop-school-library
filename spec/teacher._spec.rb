@@ -11,7 +11,7 @@ describe Teacher do
       expect(teacher.class.name).to eq('Teacher')
     end
   end
-    context 'when I call the can_use_services? method' do
+  context 'when I call the can_use_services? method' do
     it 'Teacher should be able to use services' do
       expect(@teacher.can_use_services?).to eq(true)
     end

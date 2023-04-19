@@ -11,7 +11,7 @@ describe Student do
       expect(student.class.name).to eq('Student')
     end
   end
-    context 'when I call the play_hooky method' do
+  context 'when I call the play_hooky method' do
     it 'student should play hooky' do
       expect(@student.play_hooky).to eq('¯\(ツ)/¯')
     end

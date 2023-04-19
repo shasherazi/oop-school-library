@@ -1,5 +1,5 @@
 require './list_items'
-
+require 'json'
 class ListBooks < List
   def list(books)
     if books.empty?

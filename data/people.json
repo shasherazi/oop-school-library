@@ -1,0 +1,24 @@
+[
+  {
+    "name": "shasherazi",
+    "age": "20",
+    "id": 766,
+    "description": "Student",
+    "rentals": [
+
+    ],
+    "classroom": "computer science",
+    "specialization": null
+  },
+  {
+    "name": "Michael",
+    "age": "40",
+    "id": 372,
+    "description": "Teacher",
+    "rentals": [
+
+    ],
+    "classroom": null,
+    "specialization": "software engineering"
+  }
+]

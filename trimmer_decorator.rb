@@ -1,3 +1,4 @@
+require_relative './base_decorator'
 require './nameable'
 
 class TrimmerDecorator < BaseDecorator

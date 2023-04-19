@@ -10,7 +10,8 @@ describe Student do
       student = Student.new(20, 'John', nil, 'Maths')
       expect(student.class.name).to eq('Student')
     end
-
+  end
+    context 'when I call the play_hooky method' do
     it 'student should play hooky' do
       expect(@student.play_hooky).to eq('¯\(ツ)/¯')
     end

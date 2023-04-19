@@ -1,5 +1,6 @@
 require 'json'
 require_relative './storage'
+require_relative './rental_storage'
 require './book'
 
 class BookStorage < Storage
@@ -29,7 +30,8 @@ class BookStorage < Storage
   def self.serialize(book)
     {
       title: book.title,
-      author: book.author
+      author: book.author,
+      rentals: book.rentals.map { |rental| RentalStorage.serialize(rental) }
     }
   end
 

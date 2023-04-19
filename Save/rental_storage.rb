@@ -31,16 +31,18 @@ class RentalStorage < Storage
   def self.serialize(rental)
     {
       date: rental.date,
-      book: BookStorage.serialize(rental.book),
-      person: PeopleStorage.serialize(rental.person)
+      book: rental.book.title,
+      person: rental.person.id
     }
   end
 
   def self.deserialize(item)
     temp = []
     item.each do |rental|
-      person = PeopleStorage.deserialize([rental['person']])
-      book = BookStorage.deserialize([rental['book']])
+      person_id = rental['person']
+      person = PeopleStorage.fetch.find { |person_temp| person_temp.id == person_id }
+      book_name = rental['book']
+      book = BookStorage.fetch.find { |book_temp| book_temp.title == book_name }
       rental = Rental.new(rental['date'], book, person)
       temp.push(rental)
     end

@@ -32,6 +32,7 @@ class PeopleStorage < Storage
       age: person.age,
       id: person.id,
       description: person.class,
+      rentals: person.rentals.map { |rental| RentalStorage.serialize(rental) },
       classroom: person.instance_of?(::Student) ? person.classroom : nil,
       specialization: person.instance_of?(::Teacher) ? person.specialization : nil
     }

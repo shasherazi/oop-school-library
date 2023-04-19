@@ -7,6 +7,7 @@ describe Book do
   before(:each) do
     @book = Book.new('The Lord of the Rings', 'J.R.R. Tolkien')
   end
+
   context 'when creating a new book' do
     it 'should create a new book' do
       book = Book.new('The Lord of the Rings', 'J.R.R. Tolkien')
@@ -18,8 +19,8 @@ describe Book do
   context 'when I call the add_rental method' do
     it 'should add a book to the rentals' do
       book = Book.new('The Lord of the Rings', 'J.R.R. Tolkien')
-      person = Person.new('John', 20)
-      rental = Rental.new('2020-01-01', book, person)
+      rental = double('rental')
+      expect(rental).to receive(:book=).with(book)
       expect(book.add_rental(rental)).to eq(book)
     end
   end
